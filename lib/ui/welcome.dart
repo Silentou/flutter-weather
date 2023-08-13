@@ -64,7 +64,6 @@ class _WelcomeState extends State<Welcome> {
             ),
           );
         },
-
       ),
       floatingActionButton:  FloatingActionButton(
         backgroundColor: myConstant.sencondaryColor,
