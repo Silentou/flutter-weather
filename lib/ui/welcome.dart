@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:weather/models/city.dart';
 import 'package:weather/models/constants.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:weather/ui/home.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -12,6 +11,7 @@ class Welcome extends StatefulWidget {
 }
 
 class _WelcomeState extends State<Welcome> {
+
   @override
   Widget build(BuildContext context) {
     List<City> cities = City.citiesList.where((city) => city.isDefault == false).toList();
@@ -48,15 +48,23 @@ class _WelcomeState extends State<Welcome> {
                 ]),
             child: Row(
               children: [
-                Image.asset(
-                  cities[index].isSelected == true
-                      ? 'assets/checked.png'
-                      : 'assets/unchecked.png',
-                  width: 30,
+                GestureDetector(
+                  onTap: (){
+                    setState(() {
+                     cities[index].isSelected =! cities[index].isSelected;
+                    });
+                  },
+                  child: Image.asset(
+                    cities[index].isSelected == true
+                        ? 'assets/checked.png'
+                        : 'assets/unchecked.png',
+                    width: 30,
+                  ),
                 ),
+
                 const SizedBox(width: 10,),
                 Text(cities[index].city,style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 12,
                   fontWeight: FontWeight.normal,
                   color: cities[index].isSelected == true ? myConstant.primaryColor : Colors.black54
                 ),)
@@ -69,15 +77,8 @@ class _WelcomeState extends State<Welcome> {
         backgroundColor: myConstant.sencondaryColor,
         child: const Icon(Icons.pin_drop),
         onPressed: (){
-          print(selectedCities);
-          // Fluttertoast.showToast(
-          //     msg: "$selectedCities",
-          //     toastLength: Toast.LENGTH_SHORT,
-          //     gravity: ToastGravity.CENTER,
-          //     timeInSecForIosWeb: 1,
-          //     backgroundColor: Colors.red,
-          //     textColor: Colors.white,
-          //     fontSize: 16.0);
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => const Home(title: 'Home',)));
         },
       ),
     );
